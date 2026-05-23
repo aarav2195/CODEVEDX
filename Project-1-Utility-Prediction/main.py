@@ -30,17 +30,21 @@ while True:
             print(data)
 
             row = int(input("Enter the row number to update: "))
+            if row not in data.index:
+                print("Invalid Row number")
+            else:
+                members = int(input("Enter new family members: "))
+                hours = int(input("Enter new usage hours: "))
+                usage = int(input("Enter new utility usage: "))
 
-            members = int(input("Enter new family members: "))
-            hours = int(input("Enter new usage hours: "))
-            usage = int(input("Enter new utility usage: "))
+                data.loc[row] = [members,hours,usage]
 
-            data.loc[row] = [members,hours,usage]
-
-            data.to_csv(r"E:\AARAV\CODEVEDX\Project-1-Utility-Prediction\dataset.csv",index=False)
-            print("Record updated successfully")
+                data.to_csv(r"E:\AARAV\CODEVEDX\Project-1-Utility-Prediction\dataset.csv",index=False)
+                print("Record updated successfully")
         except ValueError:
             print("Please enter valid numeric values.")
+        except FileNotFoundError:
+            print("Dataset file not found.")
         except Exception as e:
             print("Error: ", e)
     elif choice == "4":
