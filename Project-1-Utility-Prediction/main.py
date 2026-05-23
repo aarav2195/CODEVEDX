@@ -17,7 +17,7 @@ while True:
         try:
             members = int(input("Enter family members: "))
             hours = int(input("Enter usage hours: "))
-            usage = int(input("Enter utility usage:")) 
+            usage = int(input("Enter utility usage: ")) 
 
             new_row = pd.DataFrame({"members":[members],"hours":[hours],"usage":[usage]})
             new_row.to_csv(r"E:\AARAV\CODEVEDX\Project-1-Utility-Prediction\dataset.csv",mode="a",header=False,index=False)
@@ -25,7 +25,24 @@ while True:
         except ValueError:
             print("Please enter valid numeric values.")
     elif choice == "3":
-        print("Update Data selected")
+        try:
+            data = pd.read_csv(r"E:\AARAV\CODEVEDX\Project-1-Utility-Prediction\dataset.csv")
+            print(data)
+
+            row = int(input("Enter the row number to update: "))
+
+            members = int(input("Enter new family members: "))
+            hours = int(input("Enter new usage hours: "))
+            usage = int(input("Enter new utility usage: "))
+
+            data.loc[row] = [members,hours,usage]
+
+            data.to_csv(r"E:\AARAV\CODEVEDX\Project-1-Utility-Prediction\dataset.csv",index=False)
+            print("Record updated successfully")
+        except ValueError:
+            print("Please enter valid numeric values.")
+        except Exception as e:
+            print("Error: ", e)
     elif choice == "4":
         print("Predict Usage selected")
     elif choice == "5":
