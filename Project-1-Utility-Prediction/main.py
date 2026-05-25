@@ -1,10 +1,10 @@
 import pandas as pd
-
+import os
+import random
 from sklearn.linear_model import LinearRegression
 
-
-
-CSV_FILE = r"E:\AARAV\CODEVEDX\Project-1-Utility-Prediction\dataset.csv"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CSV_FILE = os.path.join(BASE_DIR,"dataset.csv")
 
 #Load data from CSV file
 def load_data():
@@ -26,7 +26,7 @@ def add_data():
     try:
         members = int(input("Enter family members: "))
         hours = int(input("Enter usage hours: "))
-        usage = int(input("Enter utility usage: ")) 
+        usage = (members * 25) + (hours * 15) + random.randint(-15,15) 
 
         new_row = pd.DataFrame({"members":[members],"hours":[hours],"usage":[usage]})
         new_row.to_csv(CSV_FILE,mode="a",header=False,index=False)
@@ -49,7 +49,7 @@ def update_data():
         else:
             members = int(input("Enter new family members: "))
             hours = int(input("Enter new usage hours: "))
-            usage = int(input("Enter new utility usage: "))
+            usage = (members * 25) + (hours * 15) + random.randint(-15,15)
 
             data.loc[row] = [members,hours,usage]
 
@@ -92,7 +92,30 @@ def predict_usage():
     except Exception as e:
         print("Error:", e)
 
+#Delete an existing record
+def delete_data():
+    try:
+        data = load_data()
 
+        print("\nCurrent Data:")
+        print(data)
+
+        row = int(input("\nEnter row number to delete: "))
+
+        if row not in data.index:
+            print("Invalid row index.")
+            return
+        data = data.drop(row)
+
+        data.reset_index(drop=True,inplace=True)
+
+        data.to_csv(CSV_FILE,index=False)
+
+        print("Record deleted successfully!")
+    except ValueError:
+        print("Please enter valid numeric values.")
+    except Exception as e:
+        print("Error:", e)
 
 while True:
     print("\n-------Utility Usage Prediction Tool-------")
@@ -100,8 +123,8 @@ while True:
     print("2. Add Data")
     print("3. Update Data")
     print("4. Predict Usage")
-    
-    print("5. Exit")
+    print("5. Delete Data")
+    print("6. Exit")
 
     choice = input("Enter your choice: ")
 
@@ -113,8 +136,9 @@ while True:
         update_data()
     elif choice == "4":
         predict_usage()
-    
     elif choice == "5":
+        delete_data()
+    elif choice == "6":
         print("Thank you for using the System.")
         break
     else:

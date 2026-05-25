@@ -1,30 +1,82 @@
-# \# Utility Usage Prediction Tool
+# Utility Usage Prediction Tool
 
-# 
+## Overview
 
-# A machine learning-based console application for predicting utility usage using Python, Pandas, and Scikit-learn.
+The Utility Usage Prediction Tool is a console-based Machine Learning application developed using Python. It helps predict utility consumption based on family size and usage hours.
 
-# 
+---
 
-# \## Features
+## Features
 
-# \- CSV file handling
+- View Records
+- Add Records
+- Update Records
+- Delete Records
+- CSV File Handling
+- Utility Usage Prediction
+- Exception Handling
+- Menu-Driven Console Interface
 
-# \- Data management
+---
 
-# \- Usage prediction
+## Technologies Used
 
-# \- Exception handling
+- Python
+- Pandas
+- Scikit-Learn
 
-# 
+---
 
-# \## Technologies
+## Machine Learning Model
 
-# \- Python
+Model Used:
 
-# \- Pandas
+- Linear Regression
 
-# \- NumPy
+Input Features:
 
-# \- Scikit-learns
+- Family Members
+- Usage Hours
 
+Target Variable:
+
+- Utility Usage
+
+---
+
+## Project Structure
+
+Project-1-Utility-Prediction
+
+├── main.py
+
+├── dataset.csv
+
+├── generate_dataset.py
+
+├── requirements.txt
+
+└── README.md
+
+---
+
+## How to Run
+
+Install dependencies:
+
+pip install pandas numpy scikit-learn
+
+Run:
+
+py main.py
+
+---
+
+## Sample Operations
+
+1. View Data
+2. Add Data
+3. Update Data
+4. Predict Usage
+5. Delete Record
+6. Exit
