@@ -30,13 +30,26 @@ while True:
         except Exception as e:
             print("Error: ", e)
     elif choice == "3":
-        print("Handle Missing Values")
+        try:
+            data = pd.read_csv(r"E:\AARAV\CODEVEDX\Project-2-Student-Performance-Prediction\dataset.csv")
+
+            data.loc[5,"marks"] = None
+
+            print("\nMissing Values before cleaning:")
+            print(data.isnull().sum())
+
+            data["marks"] = data["marks"].fillna(data["marks"].mean())
+
+            print("\nMissing Values after cleaning:")
+            print(data.isnull().sum())
+        except Exception as e:
+            print("Error: ", e)
     elif choice == "4":
         print("Visualize Data")
     elif choice == "5":
         print("Predict Performance")
     elif choice == "6":
-        print("Exiting...")
+        print("Thank you for using the System.")
         break
     else:
         print("Invalid choice")
