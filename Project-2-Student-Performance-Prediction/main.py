@@ -1,3 +1,6 @@
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+
 while True:
     print("\n-------Student Performance Prediction System-------")
     print("1. View Dataset")
@@ -10,9 +13,22 @@ while True:
     choice = input("Enter your choice: ")
 
     if choice == "1":
-        print("View Dataset")
+        try:
+            data = pd.read_csv(r"E:\AARAV\CODEVEDX\Project-2-Student-Performance-Prediction\dataset.csv")
+            print(data)
+        except FileNotFoundError:
+            print("Dataset not found")
     elif choice == "2":
-        print("Analyze Dataset")
+        try:
+            data = pd.read_csv(r"E:\AARAV\CODEVEDX\Project-2-Student-Performance-Prediction\dataset.csv")
+
+            print("\nFirst 5 Records:")
+            print(data.head())
+
+            print("\nDataset Summary:")
+            print(data.describe())
+        except Exception as e:
+            print("Error: ", e)
     elif choice == "3":
         print("Handle Missing Values")
     elif choice == "4":
