@@ -72,3 +72,13 @@ Project-2-Student-Performance-Prediction/
 ├── main.py
 ├── requirements.txt
 └── README.md
+
+## How to Run
+
+Install dependencies:
+
+pip install pandas numpy scikit-learn
+
+Run:
+
+py main.py

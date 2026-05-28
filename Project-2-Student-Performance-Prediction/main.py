@@ -133,7 +133,7 @@ def predict_performane():
         print("Error: ", e)
 
 while True:
-    print("\n-------Student Performance Prediction System-------")
+    print("\n=======Student Performance Prediction System=======")
     print("1. View Dataset")
     print("2. Analyze Dataset")
     print("3. Handle Missing Values")
