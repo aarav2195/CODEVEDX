@@ -1,6 +1,8 @@
 import pandas as pd
 import os
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+import matplotlib.pyplot as plt
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_FILE = os.path.join(BASE_DIR,"dataset.csv")
@@ -9,7 +11,7 @@ CSV_FILE = os.path.join(BASE_DIR,"dataset.csv")
 def load_data():
     return pd.read_csv(CSV_FILE)
 
-#View data
+#Display all records
 def view_data():
     try:
         data = load_data()
@@ -47,6 +49,50 @@ def handle_missing_values():
     except Exception as e:
         print("Error: ", e)
 
+#Data Visualization
+def visualize_data():
+    data = load_data()
+
+    print("\nVisualization Options")
+    print("1. Attendance vs Final Performance")
+    print("2. Study Hours vs Marks")
+    print("3. Marks Distribution")
+
+    visual_choice = input("Enter choice: ")
+
+    if visual_choice == "1":
+
+        plt.scatter(data["attendance"], data["final_performance"])
+
+        plt.xlabel("Attendance")
+        plt.ylabel("Final Performance")
+        plt.title("Attendance vs Final Performance")
+
+        plt.show()
+        
+    elif visual_choice == "2":
+
+        plt.scatter(data["study_hours"], data["marks"])
+
+        plt.xlabel("Study Hours")
+        plt.ylabel("Marks")
+        plt.title("Study Hours vs Marks")
+
+        plt.show()
+        
+    elif visual_choice == "3":
+
+        plt.hist(data["marks"])
+
+        plt.xlabel("Marks")
+        plt.ylabel("Frequency")
+        plt.title("Marks Distribution")
+
+        plt.show()
+        
+    else:
+        print("Invalid Choice")
+
 #Training Linear Regression model
 def train_model():
     data = load_data()
@@ -58,6 +104,12 @@ def train_model():
     model = LinearRegression()
 
     model.fit(X,y)
+
+    predictions = model.predict(X)
+
+    accuracy = r2_score(y,predictions)
+
+    print(f"\nModel Accuracy: {accuracy*100:.2f}%")
 
     return model
 
@@ -98,7 +150,7 @@ while True:
     elif choice == "3":
         handle_missing_values()
     elif choice == "4":
-        print("Visualize Data")
+        visualize_data()
     elif choice == "5":
         predict_performane()
     elif choice == "6":
