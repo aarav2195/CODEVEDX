@@ -32,6 +32,18 @@ def view_data():
     except Exception as e:
         print("Error: ", e)
 
+#Analyze Dataset
+def analyze_data():
+    data = load_data()
+
+    print("\nData Analysis")
+
+    print("Total records: ", len(data))
+
+    print("\nClass Distribution: ")
+
+    print(data["label"].value_counts())
+
 #Text Preprocessing
 def preprocess_text(text):
     tokens = word_tokenize(text.lower())
@@ -118,24 +130,27 @@ def load_model():
 while True:
     print("\n-------Fake News Detection-------")
     print("1. View Dataset")
-    print("2. Train Model")
-    print("3. Detect News")
-    print("4. Load Saved Model")
-    print("5. Exit")
+    print("2. Analyze Dataset")
+    print("3. Train Model")
+    print("4. Detect News")
+    print("5. Load Saved Model")
+    print("6. Exit")
 
     choice = input("Enter your choice: ")
 
     if choice == "1":
         view_data()
     elif choice == "2":
+        analyze_data()
+    elif choice == "3":
         model, vectorizer = train_model()
         print("Model Trained Successfully")
         print("Model Saved Successfully")
-    elif choice == "3":
-        detect_news()
     elif choice == "4":
-        load_model()
+        detect_news()
     elif choice == "5":
+        load_model()
+    elif choice == "6":
         print("Thank you for using the System.")
         break
     else:
