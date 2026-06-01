@@ -3,6 +3,7 @@ import os
 import nltk
 import pickle
 
+nltk.download("punkt_tab")
 nltk.download("punkt")
 nltk.download("stopwords")
 
@@ -61,11 +62,11 @@ def train_model():
         model.fit(X,y)
 
         #Save Model
-        with open("model.pkl", "wb") as file:
+        with open(r"E:\AARAV\CODEVEDX\Project-3-Fake-News-Detection\model.pkl", "wb") as file:
             pickle.dump(model,file)
 
         #Save Vectorizer
-        with open("vectorizer.pkl", "wb") as file:
+        with open(r"E:\AARAV\CODEVEDX\Project-3-Fake-News-Detection\vectorizer.pkl", "wb") as file:
             pickle.dump(vectorizer,file)
 
         return model, vectorizer
@@ -76,7 +77,7 @@ def train_model():
 #Detect News
 def detect_news():
     try:
-        model, vectorizer = train_model()
+        model, vectorizer = load_model()
 
         news = input("Enter New Text: ")
 
@@ -94,7 +95,25 @@ def detect_news():
     except Exception as e:
         print("Error: ", e)
 
+#Load Saved model
+def load_model():
+    try:
+        if os.path.getsize(r"E:\AARAV\CODEVEDX\Project-3-Fake-News-Detection\model.pkl") == 0:
+            print("Model file is empty. Train model again.")
+            return None, None
+    
+        with open(r"E:\AARAV\CODEVEDX\Project-3-Fake-News-Detection\model.pkl", "rb") as file:
+            model = pickle.load(file)
 
+        with open(r"E:\AARAV\CODEVEDX\Project-3-Fake-News-Detection\vectorizer.pkl", "rb") as file:
+            vectorizer = pickle.load(file)
+        
+        print("\nSaved Model loaded Successfully")
+
+        return model, vectorizer
+    except FileNotFoundError:
+        print("Train the model first.")
+        return None, None
 
 while True:
     print("\n-------Fake News Detection-------")
@@ -115,7 +134,7 @@ while True:
     elif choice == "3":
         detect_news()
     elif choice == "4":
-        load_data()
+        load_model()
     elif choice == "5":
         print("Thank you for using the System.")
         break
