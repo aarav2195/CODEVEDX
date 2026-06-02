@@ -1,4 +1,25 @@
 import pandas as pd
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CSV_FILE = os.path.join(BASE_DIR,"faq_dataset.csv")
+
+#Load data from CSV file
+def load_data():
+    return pd.read_csv(CSV_FILE)
+
+#Display all records
+def view_data():
+    try:
+        data = load_data()
+
+        print("\nFAQ Dataset:")
+
+        print(data)
+    except FileNotFoundError:
+        print("Dataset Not found.")
+    except Exception as e:
+        print("Error: ", e)
 
 while True:
     print("\n------AI Helpdesk Chatbot-------")
@@ -10,7 +31,7 @@ while True:
     choice = input("Enter choice: ")
 
     if choice == "1":
-        print("View dataset selected")
+        view_data()
     elif choice == "2":
         print("Chat feature coming next")
     elif choice == "3":
