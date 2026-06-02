@@ -21,6 +21,24 @@ def view_data():
     except Exception as e:
         print("Error: ", e)
 
+#
+def add_faq():
+    try:
+        question = input("Enter question: ").strip()
+
+        answer = input("Enter answer: ").strip()
+
+        new_row = pd.DataFrame({
+            "question":[question],
+            "answer":[answer]
+        })
+
+        new_row.to_csv(CSV_FILE, mode="a", header=False, index=False)
+
+        print("\nFAQ Added Successfuly")
+    except Exception as e:
+        print("Error: ", e)
+
 while True:
     print("\n------AI Helpdesk Chatbot-------")
     print("1. View FAQ Dataset")
@@ -35,7 +53,7 @@ while True:
     elif choice == "2":
         print("Chat feature coming next")
     elif choice == "3":
-        print("Add FAQ feature coming next")
+        add_faq()
     elif choice == "4":
         print("Exiting...")
         break
