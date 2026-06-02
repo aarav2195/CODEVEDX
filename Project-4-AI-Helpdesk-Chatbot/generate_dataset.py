@@ -20,7 +20,16 @@ faq_data={
         "Office timings are 9 AM to 6 PM.",
         "Email hr@company.com.",
         "Available on the company intranet.",
-        
-
+        "Update your profile through the employee portal.",
+        "Create a support ticket for the laptop issues.",
+        "Check leave balance in HR portal",
+        "Payroll details are available in the payroll system.",
+        "Email support@company.com."
     ]
 }
+
+data = pd.DataFrame(faq_data)
+
+data.to_csv(r"Project-4-AI-Helpdesk-Chatbot\faq_dataset.csv", index = False)
+
+print("FAQ Dataset Generated Successfully!")
