@@ -68,16 +68,26 @@ def chat_bot():
     try:
         data = load_data()
 
-        question = input("\nAsk a question: ").strip().lower()
+        user_question = input("\nAsk a question: ").strip().lower()
 
-        found = False
+        user_tokens = preprocess_text(user_question)
+
+        best_match = None
+        max_score = 0
 
         for i in range(len(data)):
-            if question == data.loc[i,"question"].lower():
-                print("\nBot: ", data.loc[i,"answer"])
-                found = True
-                break
-        if not found:
+            faq_question = data.loc[i, "question"]
+
+            faq_tokens = preprocess_text(faq_question)
+            score = len(user_tokens.intersection(faq_tokens))
+
+            if score>max_score:
+                max_score = score
+                best_match = i
+            
+        if best_match is not None and max_score > 0:
+                print("\nBot: ", data.loc[best_match,"answer"])
+        else:
             print("Bot: Sorry, I don't know the answer.")
     except Exception as e:
         print("Error: ", e)
