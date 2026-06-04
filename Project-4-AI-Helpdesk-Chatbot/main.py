@@ -33,7 +33,7 @@ def view_data():
     except Exception as e:
         print("Error: ", e)
 
-#
+#Add new FAQ to dataset
 def add_faq():
     try:
         question = input("Enter question: ").strip()
