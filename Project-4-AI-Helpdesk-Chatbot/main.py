@@ -92,12 +92,35 @@ def chat_bot():
     except Exception as e:
         print("Error: ", e)
 
+#Analyze Dataset
+def analyze_data():
+    try:
+        data = load_data()
+        print("\nTotal FAQs: ", len(data))
+
+        words = " ".join(data["question"])
+
+        keyword_count = {}
+
+        for words in words.split():
+            keyword_count[word] = keyword_count.get(word,0)+1
+
+        print("\nTop keywords:")
+
+        sorted_words = sorted(keyword_count.items(), key=lambda x: x[1], reverse = True)
+
+        for word,count in sorted_words[:5]:
+            print(word, "-", count)
+    except Exception as e:
+        print("Error: ", e)
+
 while True:
     print("\n------AI Helpdesk Chatbot-------")
     print("1. View FAQ Dataset")
     print("2. Chat with Bot")
     print("3. Add FAQ")
-    print("4. Exit")
+    print("4. Data Analysis")
+    print("5. Exit")
 
     choice = input("Enter choice: ")
 
@@ -108,6 +131,8 @@ while True:
     elif choice == "3":
         add_faq()
     elif choice == "4":
+        analyze_data()
+    elif choice == "5":
         print("Thank you for using the Chatbot.")
         break
     else:
