@@ -98,7 +98,7 @@ def analyze_data():
         data = load_data()
         print("\nTotal FAQs: ", len(data))
 
-        words = " ".join(data["question"])
+        words = " ".join(data["question"].astype(str))
 
         keyword_count = {}
 
@@ -110,7 +110,7 @@ def analyze_data():
         sorted_words = sorted(keyword_count.items(), key=lambda x: x[1], reverse = True)
 
         for word,count in sorted_words[:5]:
-            print(word, "-", count)
+            print(f"{word} : {count}")
     except Exception as e:
         print("Error: ", e)
 
