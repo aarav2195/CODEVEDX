@@ -102,8 +102,9 @@ def analyze_data():
 
         keyword_count = {}
 
-        for words in words.split():
-            keyword_count[word] = keyword_count.get(word,0)+1
+        for word in words.split():
+            if word.lower() not in stop_words:
+                keyword_count[word] = keyword_count.get(word,0)+1
 
         print("\nTop keywords:")
 
