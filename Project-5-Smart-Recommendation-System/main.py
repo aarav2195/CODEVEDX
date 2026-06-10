@@ -19,6 +19,28 @@ def view_data():
     except Exception as e:
         print("Error: ",e)
 
+def analyze_data():
+    try:
+        data = load_data()
+
+        print("\nDataset Analysis:")
+        
+        print("\nTotal Movies: ", len(data))
+        
+        print("\nGenre Distribution:")
+        print(data["genre"].value_counts())
+
+        print("\nAverage Rating:")
+        print(round(data["rating"].mean(),2))
+
+        best_movie = data.loc[data["rating"].idxmax()]
+
+        print("\nHighest Rated Movie: ")
+
+        print(best_movie["movie"], " - " ,best_movie["rating"])
+    except Exception as e:
+        print("Error: ", e)
+
 while True:
     print("\n-------Smart Recommendation System-------")
     print("1. View Dataset")
@@ -31,7 +53,7 @@ while True:
     if choice == "1":
         view_data()
     elif choice == "2":
-        print("Analyze Dataset selected")
+        analyze_data()
     elif choice == "3":
         print("Get recommendations selected")
     elif choice == "4":
