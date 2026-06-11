@@ -86,6 +86,6 @@ data = pd.DataFrame(
     columns=["movie", "genre", "description", "rating"]
 )
 
-data.to_csv(r"Project-5-Smart-Recommendation-System/movies.csv", index=False)
+data.to_csv(r"Project-5-Smart-Recommendation-System\movies.csv", index=False)
 
 print("Dataset Generated Successfully")
