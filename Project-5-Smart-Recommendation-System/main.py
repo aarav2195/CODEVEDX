@@ -7,6 +7,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_FILE = os.path.join(BASE_DIR,"movies.csv")
 
+recommendation_result = None
+
 def load_data():
     return pd.read_csv(CSV_FILE)
 
@@ -45,36 +47,57 @@ def analyze_data():
         print("Error: ", e)
 
 def recommend_movies():
+    global recommendation_result
     try:
         data = load_data()
 
-        preference = input("\nEnter preferred Genre: ")
+        preference = input("\nEnter preferred Genre or Keyword: ")
 
-        tfidf = TfidfVectorizer()
+        data["features"] = (data["genre"].astype(str) + " " + data["description"].astype(str))
 
-        tfidf_matrix = tfidf.fit_transform(data["genre"])
+        tfidf = TfidfVectorizer(stop_words="english",lowercase=True)
 
-        user_vector = tfidf.transform([preference])
+        movie_vectors = tfidf.fit_transform(data["features"])
 
-        similarity_scores = cosine_similarity(user_vector,tfidf_matrix)
+        user_vector = tfidf.transform([preference.lower()])
 
-        scores = similarity_scores.flatten()
+        similarity_scores = cosine_similarity(user_vector,movie_vectors)[0]
 
-        top_indices = scores.argsort()[::-1][:5]
+        data["similarity"] = similarity_scores
 
+        recommendations = data[data["similarity"] > 0].sort_values(by="similarity",ascending=False).head(5)
+
+        recommendation_result = []
+
+        if recommendations.empty:
+            print("\nNo close recommendations found.")
+            return
         print("\nRecommended Movies:\n")
-
-        for index in top_indices:
-            print(data.iloc[index]["movie"])
+        for _, row in recommendations.iterrows():
+            score = round(row["similarity"] * 100,2)
+            recommendation_result.append([row["movie"],score])
+            print(f"{row['movie']} - {score}% match")
     except Exception as e:
-        print("Error: ",e)
+        print("Error:", e)
+
+def save_recommendations():
+    global recommendation_result
+    if recommendation_result is None:
+        print("Get Reommendations first")
+        return
+    result = pd.DataFrame(recommendation_result,columns=["movie","similarity_score"])
+
+    result.to_csv(r"Project-5-Smart-Recommendation-System\recommendations.csv",index=False)
+
+    print("Recommendations Saved Successfully.")
 
 while True:
     print("\n-------Smart Recommendation System-------")
     print("1. View Dataset")
     print("2. Analyze Dataset")
     print("3. Get Recommendations")
-    print("4. Exit")
+    print("4. Save Recommendations")
+    print("5. Exit")
 
     choice = input("Enter choice: ")
 
@@ -85,7 +108,9 @@ while True:
     elif choice == "3":
         recommend_movies()
     elif choice == "4":
-        print("Exiting...")
+        save_recommendations()
+    elif choice == "5":
+        print("Thank you for using the system.")
         break
     else:
         print("Invalid choice")
