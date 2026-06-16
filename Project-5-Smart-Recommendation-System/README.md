@@ -41,6 +41,7 @@ The objective of this project is to build an intelligent recommendation engine t
 
 ## Project Structure
 
+```
 Project-5-Smart-Recommendation-System
 
 │
@@ -51,9 +52,11 @@ Project-5-Smart-Recommendation-System
 ├── README.md
 │
 └── screenshots
+    │
     ├── dataset_view.png
     ├── analysis.png
     └── recommendation_output.png
+```
 
 ---
 
